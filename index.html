@@ -1,226 +1,51 @@
 <html>
 
   <head>
-    <script src="jquery3-3-1.js"></script> 
-    <style>
-      #game{
-        width:400px;
-        height:250px;
-        position:relative;
-        overflow:hidden;
-        background:#7DAFE1;
-      }
-      #floor{
-        background: green;
-        width: 990px;
-        height: 45px;
-        position: absolute;
-        bottom: -12px;
-        z-index:1;
-        left: 0px;
-      }
-      #screen-map {
-        z-index: 2;
-        position: absolute;
-        left: 0px;
-      }
-      #hero{
-        top: 181px;
-        height: 34px;
-        width: 24px;
-        background: #000;
-        position: absolute;
-      }
-      .map-sol{
-        background:yellow;
-      }
-      .map-sol, .map-fin, .map-danger{
-        width:20px;
-        height:20px;
-      }
-      .map-fin {
-        background:red;
-      }
-      .map-danger {
-        background:orange;
-      }
-    </style>
-  </head>
+    
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Jeu LN</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="script/jquery3-3-1.js"></script> 
+  <script src="script/map-lvl.js"></script>
+  <script src="script/main.js"></script>
+</head>
+<body>
   
-  <bomove>
+  <body>    
     <div id="game">
-      <div id="hero"><!--<img src="hero-0-r.gif">--></div>
+      <div id="display" class="end">
+          <div id="name" class="name"></div>
+          <p id="title-game">T'es Nul</p>
+          <div id="score"><span>00</span> Score</div>
+          <a href="#" onClick="window.location=''">Rejouer</a>
+          <img src="sprite/tenor.gif" />
+      </div>
+      <div id="display" class="before">
+        <div class="">
+          <p id="title-game">ZUB</p>
+          <input type="text" id="input-name" placeholder="Nom du personnage..." value="AAA" name="name" />
+          <button>enter</button>
+          <img src="sprite/tenor.gif" />
+        </div>
+      </div>
+
+      <div id="status">
+        <div id="name" class="name"></div>
+        <div id="score"><span>00</span> Score</div>
+        <div id="time"><span>00</span> Time</div>
+      </div>
+      <div id="hero"><img src="sprite/heros/hero-l.png"></div>
       <div id="screen-map"></div>
       <div id="floor"></div>  
     </div>
 
 
     <script>
-      map= new Array(204,204,204,204,160,116,116,116,116,160,204,204,204,204,116,116,116,116,116,116,116,116,160,116,160,160,116,116,160,116,160,116,72,160,116,72,116,160,160,72,116,72,116,160,204,204,160,116,72,160,116,204,72,116,160,160,116,72,116,160,204,116,160,160,72,116,204,160,204,160,116,72,116,160,204);
-      //44 pour monter descendre
-      danger= new Array(300,300,300,300,300,300,300,300,300,300,204,204,204,204,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,204,204,300,300,300,300,300,300,300,300,160,160,300,300,300,300,300,300,160,160,300,300,300,300,300,300,300,300,300,300,301);
-
-      var perso = {
-        move_to : '',
-        action : '',
-        move : 0,
-        dir_y :0,
-        cur_jump : -50,
-        pos : {
-          top : 170,
-          left : 40,
-        },
-        status:'life',
-        name : 'Lucas',
-        sprite : 'avatar2',
-      }
-
-
-      $(function(){
-        startGame();
-      })
-
-      function startGame(){
-        $('#hero').css({'top':$('#game').height()-$('#hero').height()-$('#floor').height()});
-        document.onkeydown = getActionStart;
-        document.onkeyup = getActionEnd;
-        mapped();     
-        moveHero();
-        jump();
-      }
-
-      function mapped() {
-        for (i = 0; i <= 74; i++) {
-          if (map[i] != 300) {
-            $('#screen-map').append('<div class="map-sol" style="position:absolute;top:' + map[i] + 'px;left:' + i * 20 + 'px">');
-          }
-          if (danger[i] == 301) {
-            danger[i] = map[i] - 24;
-            $('#screen-map').append('<div class="map-fin" style="position:absolute;top:' + danger[i] + 'px;left:' + i * 20 + 'px">');
-            danger[i] = 301;
-          }
-          if ((danger[i] != 300) && (danger[i] != 301)) {
-            danger[i] -= 11;
-            $('#screen-map').append('<div class="map-danger" style="position:absolute;top:' + danger[i] + 'px;left:' + i * 20 + 'px"></div>');
-          }
-        }
-      }
-  
-      function moveHero(){
-        console.log(perso)
-        //console.log(perso);
-        //console.log(dy);
-        /*
-        if(perso.move===5) {
-          if(perso.move==="play") {
-            $('#hero').html('<img src=hero-lm.gif>');
-          }
-        } else if(perso.move===0){
-
-        }
-        if(perso.move===-5){
-          if(perso.move==="play") {
-            $('#hero').html('<img src=hero-rm.gif>');
-          } if(perso.move==="stop") {
-            $('#hero').html('<img src=hero-r.gif>');
-          }
-          XMove+=-7;
-        } else if(perso.move===5) {
-          if(perso.move==="play") {
-            $('#hero').html('<img src=hero-lm.gif>');
-          } if(perso.move==="stop") {
-            $('#hero').html('<img src=hero-l.gif>');
-          }
-          XMove+=7;
-        } else if(perso.move===0) {
-          if(perso.move==="play") {
-            $('#hero').html('<img src=hero-l.gif>');
-          } if(perso.move==="stop") {
-            $('#hero').html('<img src=hero-r.gif>');
-          }
-        }*/
-      }
-
-      function jump(){
-        if(perso.cur_jump!= -50){
-          perso.cur_jump++;
-          perso.dir_y -= perso.cur_jump;
-        }
-        if ((perso.pos.top - perso.dir_y >= map[Math.round(perso.pos.left / 20)] - 37) && (perso.pos.top - perso.dir_y <= map[Math.round(perso.pos.left / 20)] - 27)) {
-          perso.cur_jump = -50;
-          perso.dir_y = 0;
-          perso.pos.top = map[Math.round(perso.pos.left / 20)] - 34;
-        } else {
-          if ((perso.pos.top - perso.dir_y < map[Math.round(perso.pos.left / 20)] - 37) && (perso.cur_jump == -50)) {
-            perso.cur_jump = 1;
-          }
-          if ((perso.pos.top - perso.dir_y > map[Math.round(perso.pos.left / 20)] - 27) && (perso.cur_jump == -50)) {
-            perso.cur_jump = 1;
-          }
-        }
-        //droite et gauche
-        if (Math.abs(perso.move) == 5) {
-          perso.pos.left += perso.move;
-        }
-
-        if(perso.dir_y<-100){
-          perso.status = "dead";
-          //alert('Mort :) ');
-          window.location="";
-        }
-        //console.log(perso.cur_jump);
-        $('#hero').css({'left':perso.pos.left,'top':perso.pos.top - perso.dir_y});
-        
-        //window.scrollTo(perso.pos.left - 200, 0);
-        //
-        setTimeout("jump()", 30);
-      }
-
-    function getActionStart(keyStroke) {
-      isNetscape = (document.getElementById && !document.all);
-      touche = (isNetscape) ? keyStroke.which : event.keyCode;
-      if ((touche == 37)) {
-        perso.move = -5;
-        perso.move_to="right";
-      }
-      if ((touche == 39)) {
-        perso.move = 5;
-        perso.move_to="left";
-      }
-      if ((touche == 38) && (perso.cur_jump == -50)) {
-        perso.cur_jump = -12;
-      }
-      if(touche == 38) {
-        perso.move_to="top";
-      }
-      if(touche == 40) {
-        perso.move_to="down";
-      }
-      perso.action="play";
-      moveHero('play');
-    }
-
-    function getActionEnd(keyStroke) {
-      isNetscape = (document.getElementById && !document.all);
-      touche = (isNetscape) ? keyStroke.which : event.keyCode;
-      if ((touche == 37)) {
-        perso.move = 0;
-        perso.move_to="right";
-      }
-      if ((touche == 39)) {
-        perso.move = 0;
-        perso.move_to="left";
-      }
-      if(touche == 38) {
-        perso.move_to="top";
-      }
-      if(touche == 40) {
-        perso.move_to="down";
-      }
-      perso.action="stop";
-      moveHero('stop');
-    }
+      
     
     </script>
-  </bomove>
+  </body>
 </html>
