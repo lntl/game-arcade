@@ -9,17 +9,33 @@
   font-weight: normal;
   font-style: normal;
 }
+body{
+  margin: 0;
+  background: #b6ec67;
+}
 
-#game{
+#game {
   font-family: "8BIT WONDER";
-  width:400px;
-  height:250px;
-  position:relative;
-  overflow:hidden;
-  background:#7DAFE1;
+  width: 400px;
+  height: 250px;
+  position: relative;
+  border: 1px solid #000;
+  overflow: hidden;
+  margin: 0 auto;
+  margin-top: 50px;
+  background: #b6ec67;
+  background: -moz-linear-gradient(top, #b6ec67 0%, #b6ec67 50%, #a2d35d 51%, #87ba51 100%);
+  background: -webkit-linear-gradient(top, #b6ec67 0%,#b6ec67 50%,#a2d35d 51%,#87ba51 100%);
+  background: linear-gradient(to bottom, #b6ec67 0%,#b6ec67 50%,#a2d35d 51%,#87ba51 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b6ec67', endColorstr='#87ba51',GradientType=0 );
+}
+#display.end {
+  position: fixed;
+  height: 250;
+  top: 51px;
 }
 #floor{
-  background: #942021;
+  background: #b6ec67;
   background:url('../sprite/map/map-vide.gif');
   width: 990px;
   height: 45px;
@@ -54,9 +70,12 @@
   background:url('../sprite/map/map-sol.png');
   background-repeat: no-repeat;
 }
-.map-sol, .map-fin, .map-danger{
+.map-sol, .map-fin, .map-danger, .hit{
   width:20px;
   height:20px;
+}
+.hit {
+  background:url('../sprite/map/map-hit.gif');
 }
 .map-fin {
   background:url('../sprite/map/map-sol.gif');
@@ -70,7 +89,7 @@
   font-weight: bold;
   padding: 5px;
   width: 400px;
-  color: #fff;
+  color: #000000;
 }
 #name{
   font-size: 11px;
@@ -116,49 +135,57 @@
 }
 
 #display {
-  position: fixed;
+  position: absolute;
   z-index: 10;
-  background: #fff;
+  background: #000;
+  color: #fff;
   top: 0;
   width: 400px;
   text-align: center;
-  height: 258px;
-  border: 1px solid;
+  height: 100%;
 }
 
 #title-game {
-  color: #942021;
+  color: #b6ec67;
   margin-top: 33px;
   font-size: 36px;
 }
 input[type="text"]:focus,button:focus {
 	outline:none;
 }
-button {
+button,.btn {
   font-family: "8BIT WONDER";
   display: block;
   margin: 0 auto;
   margin-top: 20px;
   width: 150px;
   padding: 10px;
-  background: none;
-  color: #942021;
-  border: 1px solid #942021;
+  background: #000;
+  color: #b6ec67;
+  border: 1px solid #b6ec67;
   cursor: pointer;
   transition: 0.3s;
 }
-button:hover {
-  background: #942021;
+.anim-start{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+button:hover,.btn:hover {
+  background: #b6ec67;
   color: #fff;
-  border: 1px solid #942021;
+  border: 1px solid #b6ec67;
 }
 input[type="text"] {
   font-family: "8BIT WONDER";
   background: none;
   border: 0;
-  border-bottom: 1px solid;
+  border-bottom: 1px solid #b6ec67;
   padding: 10px;
   font-size: 14px;
+  color: #b6ec67;
   text-align: center;
   width: 300px;
 }
