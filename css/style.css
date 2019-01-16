@@ -135,6 +135,7 @@ body{
 }
 
 #display {
+  visibility: hidden;
   position: absolute;
   z-index: 10;
   background: #000;
