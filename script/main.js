@@ -15,6 +15,9 @@ var perso = {
   score : 0,
 }
 
+var ctimg=1;
+
+
 $(function(){
   $('.before').css({"opacity":1, "visibility":'visible'})
 
@@ -37,8 +40,6 @@ function startGame(){
   moveHero();
   jump();
 }
-
-var ctimg=1;
 
 function moveHero(){
   if(perso.action==="play"){
@@ -64,7 +65,6 @@ function moveHero(){
       $('#hero').html('<img src=sprite/heros/hero-l.png>');
     }
   }
-  console.log(perso.score)
 }
 
 function jump(){
@@ -98,11 +98,13 @@ function jump(){
     //COUNT COINT
     var herotop=perso.pos.top - perso.dir_y;
     var curent_i_map = Math.round(perso.pos.left / 20);
-
+    //console.log(curent_i_map, perso.pos.left);
     if($.inArray(curent_i_map, hit)){
       if($('.hit').data("id")===curent_i_map){
-        $('.hit[data-id='+curent_i_map+']').remove();
-        perso.score++;
+        if(herotop<$('.hit[data-id='+curent_i_map+']')[0].offsetTop && herotop<$('.hit[data-id='+curent_i_map+']')[0].offsetTop+20){
+          $('.hit[data-id='+curent_i_map+']').remove();
+          perso.score+=10;
+        }
       }
     }
   } else {
