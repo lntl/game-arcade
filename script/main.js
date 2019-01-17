@@ -20,12 +20,11 @@ var ctimg=1;
 let initGame;
 
 $(function(){
-  $('.before').css({"opacity":1, "visibility":'visible'})
-
+  $('.before').css({"opacity":1, "visibility":'visible'});
   $('button').on('click', function(){
     if($('#input-name').val()!=""){
       perso.name = $('#input-name').val();
-      $('.before').animate({opacity:0, visibility:'hidden', zIndex:-1}, 500)
+      $('.before').animate({opacity:0, visibility:'hidden', zIndex:-1}, 500);
       startGame();
     }
   })
@@ -88,6 +87,30 @@ function startGame(){
   $('.name').html(document.createTextNode(perso.name));
   moveHero();
   jump();
+
+  var cur_dalle="";
+  var cntDalle=0;
+  $('.map-sol').each(function(){
+    if(cur_dalle===""){
+      cur_dalle=$(this)[0].offsetTop;
+    }
+    if(cur_dalle!=$(this)[0].offsetTop){
+      cur_dalle="";
+    }
+    if($(this)[0].offsetTop===cur_dalle){
+      cntDalle++;
+    } else {
+      cur_dalle="";
+      cntDalle=0;
+    }
+
+    if(cntDalle===2){
+      console.log($(this));
+      console.log("poser un mob");
+    }
+
+  })
+
 }
 
 function moveHero(){

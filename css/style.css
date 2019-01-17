@@ -11,7 +11,7 @@
 }
 body{
   margin: 0;
-  background: #b6ec67;
+  background: #000000;
 }
 
 #game {
@@ -19,7 +19,7 @@ body{
   width: 400px;
   height: 250px;
   position: relative;
-  border: 1px solid #000;
+  border: 1px solid #b6ec67;
   overflow: hidden;
   margin: 0 auto;
   margin-top: 50px;
